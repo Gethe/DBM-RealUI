@@ -127,7 +127,7 @@ end
 
 local function registerDBMStyle()
     if not DBT then return end
-    local skin = DBT:RegisterSkin("RealUI")
+    local skin = DBT:RegisterSkin("nibRealUI_BossSkins")
 
     skin.defaults = {
         Skin = "RealUI",
@@ -162,9 +162,9 @@ local function registerDBMStyle()
         HugeBarYOffset = 9,
     }
 
-    if (DBM.Bars.options.Template ~= skin.defaults.Template) then
+    if (DBM.Bars.options.Template ~= skin.defaults.Template) or (DBM.Bars.options.Texture ~= skin.defaults.Texture) then
         --only set the skin if it isn't already set.
-        DBM.Bars:SetSkin("RealUI")
+        DBM.Bars:SetSkin("nibRealUI_BossSkins")
     end
 end
 
