@@ -18,12 +18,6 @@
         </Member>
     </FontFamily>
 
-    <Font name="RealUISkinFont" font="Interface\AddOns\nibRealUI_BossSkins\media\pixel_small.ttf" outline="NORMAL" virtual="true">
-        <!--Color r="1.0" g="1.0" b="1.0"/-->
-        <FontHeight>
-            <AbsValue val="8"/>
-        </FontHeight>
-    </Font>
     <Frame name="RealUISkinTimerTemplate" virtual="true" frameStrata="MEDIUM" topLevel="true">
         <Size>
             <AbsDimension x="185" y="24"/>
