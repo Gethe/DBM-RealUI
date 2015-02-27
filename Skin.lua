@@ -1,11 +1,18 @@
+local function debug(...)
+    return RealUI and RealUI.Debug("BossSkins:", ...)
+end
+
 local f = CreateFrame("Frame")
 local function registerBWStyle()
+    debug("registerBWStyle")
     if not BigWigs then return end
     local bars = BigWigs:GetPlugin("Bars", true)
     if not bars then return end
+    debug("registerBWStyle: Start")
 
     f:UnregisterEvent("ADDON_LOADED")
     f:UnregisterEvent("PLAYER_LOGIN")
+
     local fontName, fontSize, fontArgs = RealUISkinFont:GetFont()
 
     -- based on MonoUI style
@@ -126,8 +133,13 @@ local function registerBWStyle()
 end
 
 local function registerDBMStyle()
-    if not DBT then return end
+    debug("registerDBMStyle")
+    if not DBM then return end
+    debug("registerDBMStyle: Start")
     local skin = DBT:RegisterSkin("nibRealUI_BossSkins")
+
+    f:UnregisterEvent("ADDON_LOADED")
+    f:UnregisterEvent("PLAYER_LOGIN")
 
     skin.defaults = {
         Skin = "RealUI",
@@ -172,14 +184,19 @@ f:RegisterEvent("ADDON_LOADED")
 f:RegisterEvent("PLAYER_LOGIN")
 
 local reason = nil
-f:SetScript("OnEvent", function(self, event, msg)
+f:SetScript("OnEvent", function(self, event, addon)
     if event == "ADDON_LOADED" then
-        if not reason then reason = (select(6, GetAddOnInfo("BigWigs_Plugins"))) end
-        if (reason == "MISSING" and msg == "BigWigs") or msg == "BigWigs_Plugins" then
+        if not reason then reason = (select(5, GetAddOnInfo("BigWigs_Plugins"))) end
+        debug(event, addon, reason)
+        if (reason == "MISSING" and addon == "BigWigs") or addon == "BigWigs_Plugins" then
             registerBWStyle()
         end
     elseif event == "PLAYER_LOGIN" then
-        registerBWStyle()
-        registerDBMStyle()
+        debug(event)
+        if IsAddOnLoaded("BigWigs") then
+            registerBWStyle()
+        elseif IsAddOnLoaded("DBM-Core") then
+            registerDBMStyle()
+        end
     end
 end)
