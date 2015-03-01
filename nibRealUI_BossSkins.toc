@@ -1,7 +1,8 @@
 ﻿## Interface: 60100
 ## Title:nib|cffffffffReal|r|cffbf3333UI|r_BossSkins
-## Author: Gethe88
+## Author: Gethe
 ## Version: @project-version@
+## SavedVariables: RUIBossSkinsDB
 ## OptionalDeps: DBM-Core, BigWigs
 ## X-DBM-Timer-Skin: 1
 ## X-DBM-Timer-Skin-Name: RealUI

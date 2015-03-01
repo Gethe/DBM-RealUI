@@ -1,6 +1,11 @@
+local NAME, addon = ...
 local function debug(...)
     return RealUI and RealUI.Debug("BossSkins:", ...)
 end
+
+local defaults = {
+    version = GetAddOnMetadata(NAME, "Version"),
+}
 
 local f = CreateFrame("Frame")
 local function registerBWStyle()
@@ -144,7 +149,7 @@ local function registerDBMStyle()
     skin.defaults = {
         Skin = "RealUI",
         Template = "RealUISkinTimerTemplate",
-        Texture = [[Interface\AddOns\nibRealUI_BossSkins\media\Plain.tga]],
+        Texture = [[Interface\AddOns\nibRealUI_BossSkins\media\Plain]],
         FillUpBars = false,
         IconLocked = false,
 
@@ -174,7 +179,11 @@ local function registerDBMStyle()
         HugeBarYOffset = 9,
     }
 
-    if (DBM.Bars.options.Template ~= skin.defaults.Template) or (DBM.Bars.options.Texture ~= skin.defaults.Texture) then
+    if DBM.Bars.options.Texture:find("DBM") then
+        DBM.Bars.options.Texture = skin.defaults.Texture
+    end
+
+    if (DBM.Bars.options.Template ~= skin.defaults.Template) then
         --only set the skin if it isn't already set.
         DBM.Bars:SetSkin("nibRealUI_BossSkins")
     end
@@ -186,6 +195,10 @@ f:RegisterEvent("PLAYER_LOGIN")
 local reason = nil
 f:SetScript("OnEvent", function(self, event, addon)
     if event == "ADDON_LOADED" then
+        if name == NAME then
+            -- ZoneSpec:printDebug(name, "loaded")
+            RUIBossSkinsDB = RUIBossSkinsDB or defaults
+        end
         if not reason then reason = (select(5, GetAddOnInfo("BigWigs_Plugins"))) end
         debug(event, addon, reason)
         if (reason == "MISSING" and addon == "BigWigs") or addon == "BigWigs_Plugins" then
