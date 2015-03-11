@@ -74,8 +74,10 @@ local function registerBWStyle()
         label:SetFont(fontName, fontSize, fontArgs)
         label:SetShadowOffset(0, 0)
         label:SetJustifyH("LEFT")
+        label:SetJustifyV("BOTTOM")
         label:ClearAllPoints()
         label:SetPoint("BOTTOMLEFT", bar, "TOPLEFT", 4, 3)
+        label:SetPoint("TOPRIGHT", bar, "TOPRIGHT", -25, 20)
 
         local timer = bar.candyBarDuration
         timer:SetFont(fontName, fontSize, fontArgs)
@@ -108,8 +110,8 @@ local function registerBWStyle()
         local label = bar.candyBarLabel
         label:SetShadowOffset(shadow[1], shadow[2])
         label:ClearAllPoints()
-        label:SetPoint("LEFT", bar.candyBarBar, "LEFT", 2, 0)
-        label:SetPoint("RIGHT", bar.candyBarBar, "RIGHT", -2, 0)
+        label:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2, 0)
+        label:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2, 0)
 
         local timer = bar.candyBarDuration
         timer:SetShadowOffset(shadow[1], shadow[2])
