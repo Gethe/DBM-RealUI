@@ -1,6 +1,8 @@
 local NAME, addon = ...
 local function debug(...)
-    return RealUI and RealUI.Debug("BossSkins:", ...)
+    if RealUI then
+        RealUI.Debug("BossSkins", ...)
+    end
 end
 
 local defaults = {
@@ -29,7 +31,7 @@ local function registerBWStyle()
     }
 
     local function styleBar(bar)
-        --print("styleBar", bar)
+        debug("styleBar", bar)
         bar:SetHeight(10)
         bar.candyBarBackground:Hide()
 
@@ -90,7 +92,7 @@ local function registerBWStyle()
     end
 
     local function removeStyle(bar)
-        --print("removeStyle", bar)
+        debug("removeStyle", bar)
         bar:SetHeight(14)
         bar.candyBarBackdrop:Hide()
         bar.candyBarBackground:Show()
@@ -120,7 +122,7 @@ local function registerBWStyle()
 
         local font = bar:Get("bigwigs:restoreFont")
         if type(font) == "table" and font[1] then
-            --print("restoreFont", font[1], font[2], font[3])
+            debug("restoreFont", font[1], font[2], font[3])
             label:SetFont(font[1], floor(font[2] + 0.5), font[3])
             timer:SetFont(font[1], floor(font[2] + 0.5), font[3])
         else
@@ -181,10 +183,12 @@ local function registerDBMStyle()
         HugeBarYOffset = 9,
     }
 
+    debug("Override texture", DBM.Bars.options.Texture)
     if DBM.Bars.options.Texture:find("DBM") then
         DBM.Bars.options.Texture = skin.defaults.Texture
     end
 
+    debug("Set skin", DBM.Bars.options.Template, skin.defaults.Template)
     if (DBM.Bars.options.Template ~= skin.defaults.Template) then
         --only set the skin if it isn't already set.
         DBM.Bars:SetSkin("nibRealUI_BossSkins")
@@ -197,8 +201,8 @@ f:RegisterEvent("PLAYER_LOGIN")
 local reason = nil
 f:SetScript("OnEvent", function(self, event, addon)
     if event == "ADDON_LOADED" then
-        if name == NAME then
-            -- ZoneSpec:printDebug(name, "loaded")
+        if addon == NAME then
+            debug(addon, "loaded")
             RUIBossSkinsDB = RUIBossSkinsDB or defaults
         end
         if not reason then reason = (select(5, GetAddOnInfo("BigWigs_Plugins"))) end
